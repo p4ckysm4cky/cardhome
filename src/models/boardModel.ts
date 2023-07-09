@@ -8,4 +8,14 @@ export default class BoardModel {
             },
         });
     }
+    async getBoard(id: number) {
+        return await prisma.board.findUnique({
+            where: {
+                id: id,
+            },
+        });
+    }
+    async getBoards() {
+        return await prisma.board.findMany();
+    }
 }
