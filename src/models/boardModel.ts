@@ -9,13 +9,40 @@ export default class BoardModel {
         });
     }
     async getBoard(id: number) {
-        return await prisma.board.findUnique({
+        return await prisma.board.findFirst({
             where: {
-                id: id,
+                id: {
+                    equals: id,
+                },
+                deletedAt: null,
             },
         });
     }
     async getBoards() {
-        return await prisma.board.findMany();
+        return await prisma.board.findMany({
+            where: {
+                deletedAt: null,
+            },
+        });
+    }
+    async deleteBoard(id: number) {
+        return await prisma.board.update({
+            where: {
+                id: id,
+            },
+            data: {
+                deletedAt: new Date(),
+            },
+        });
+    }
+    async updateBoard(id: number, title: string) {
+        return await prisma.board.update({
+            where: {
+                id: id,
+            },
+            data: {
+                title: title,
+            },
+        });
     }
 }

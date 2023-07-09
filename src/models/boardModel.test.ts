@@ -22,6 +22,29 @@ describe("boardModel", () => {
         const boards = await boardModel.getBoards();
         expect(boards.length).toBe(2);
     });
+    test("can delete a board", async () => {
+        const boardModel = new BoardModel();
+        const board = await boardModel.createBoard("delete me");
+        await boardModel.createBoard("do not delete me");
+        expect((await boardModel.getBoards()).length).toBe(2);
+        await boardModel.deleteBoard(board.id);
+        const boards = await boardModel.getBoards();
+        expect(boards.length).toBe(1);
+        expect(boards[0].title).toBe("do not delete me");
+    });
+    test("cannot get a deleted board", async () => {
+        const boardModel = new BoardModel();
+        const board = await boardModel.createBoard("delete me");
+        await boardModel.deleteBoard(board.id);
+        const board2 = await boardModel.getBoard(board.id);
+        expect(board2).toBe(null);
+    });
+    test("can update board title", async () => {
+        const boardModel = new BoardModel();
+        const board = await boardModel.createBoard("old title");
+        const newBoard = await boardModel.updateBoard(board.id, "new title");
+        expect(newBoard.title).toBe("new title");
+    });
 });
 
 afterEach(async () => {
