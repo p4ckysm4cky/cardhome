@@ -1,5 +1,5 @@
 import BoardModel from "./boardModel";
-import prisma from "src/libs/prisma";
+import { resetDatabase } from "src/helpers/testHelper";
 
 describe("boardModel", () => {
     test("can create a board", async () => {
@@ -64,5 +64,5 @@ describe("boardModel", () => {
 });
 
 afterEach(async () => {
-    await prisma.board.deleteMany();
+    await resetDatabase();
 });
