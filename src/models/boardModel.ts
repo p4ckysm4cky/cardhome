@@ -16,12 +16,22 @@ export default class BoardModel {
                 },
                 deletedAt: null,
             },
+            include: {
+                columns: {
+                    where: {
+                        deletedAt: null,
+                    },
+                },
+            },
         });
     }
     async getBoards() {
         return await prisma.board.findMany({
             where: {
                 deletedAt: null,
+            },
+            include: {
+                columns: true,
             },
         });
     }
@@ -42,6 +52,24 @@ export default class BoardModel {
             },
             data: {
                 title: title,
+            },
+        });
+    }
+    async addColumn(boardId: number, title: string) {
+        return await prisma.column.create({
+            data: {
+                title: title,
+                boardId: boardId,
+            },
+        });
+    }
+    async deleteColumn(columnId: number) {
+        return await prisma.column.update({
+            where: {
+                id: columnId,
+            },
+            data: {
+                deletedAt: new Date(),
             },
         });
     }
