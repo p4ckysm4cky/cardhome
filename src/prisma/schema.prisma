@@ -21,12 +21,13 @@ model Card {
 }
 
 model Column {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
   title     String
   cards     Card[]
-  Board     Board?   @relation(fields: [boardId], references: [id])
+  Board     Board?    @relation(fields: [boardId], references: [id])
   boardId   Int?
 }
 
