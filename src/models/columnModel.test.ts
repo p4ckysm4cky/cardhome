@@ -3,7 +3,7 @@ import BoardModel from "./boardModel";
 import ColumnModel from "./columnMode";
 
 describe("columnModel", () => {
-    test("can update title of a column", async () => {
+    it("can update title of a column", async () => {
         const boardModel = new BoardModel();
         const board = await boardModel.createBoard("board");
         const column = await boardModel.addColumn(board.id, "old name");
@@ -13,7 +13,7 @@ describe("columnModel", () => {
             "new name"
         );
     });
-    test("can insert a card to a column", async () => {
+    it("can insert a card to a column", async () => {
         const boardModel = new BoardModel();
         const columnModel = new ColumnModel();
         const board = await boardModel.createBoard("board");
