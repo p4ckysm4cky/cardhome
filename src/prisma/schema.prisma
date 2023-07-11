@@ -11,12 +11,13 @@ datasource db {
 }
 
 model Card {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
   title     String
   content   String
-  Column    Column?  @relation(fields: [columnId], references: [id])
+  Column    Column?   @relation(fields: [columnId], references: [id])
   columnId  Int?
 }
 

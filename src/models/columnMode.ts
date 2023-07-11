@@ -20,4 +20,14 @@ export default class ColumnModel {
             },
         });
     }
+    async deleteCard(id: number) {
+        return await prisma.card.update({
+            where: {
+                id: id,
+            },
+            data: {
+                deletedAt: new Date(),
+            },
+        });
+    }
 }
