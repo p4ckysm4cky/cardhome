@@ -1,5 +1,5 @@
 import BoardModel from "./boardModel";
-import prisma from "src/libs/prisma";
+import { resetDatabase } from "src/helpers/testHelper";
 
 describe("boardModel", () => {
     test("can create a board", async () => {
@@ -45,8 +45,24 @@ describe("boardModel", () => {
         const newBoard = await boardModel.updateBoard(board.id, "new title");
         expect(newBoard.title).toBe("new title");
     });
+    test("can add a column", async () => {
+        const boardModel = new BoardModel();
+        const board = await boardModel.createBoard("board");
+        await boardModel.addColumn(board.id, "column");
+        const board2 = await boardModel.getBoard(board.id);
+        expect(board2!.columns.length).toBe(1);
+        expect(board2!.columns[0].title).toBe("column");
+    });
+    test("can delete a column", async () => {
+        const boardModel = new BoardModel();
+        const board = await boardModel.createBoard("board");
+        const column = await boardModel.addColumn(board.id, "column");
+        expect((await boardModel.getBoard(board.id))!.columns.length).toBe(1);
+        await boardModel.deleteColumn(column.id);
+        expect((await boardModel.getBoard(board.id))!.columns.length).toBe(0);
+    });
 });
 
 afterEach(async () => {
-    await prisma.board.deleteMany();
+    await resetDatabase();
 });
