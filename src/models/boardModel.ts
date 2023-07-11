@@ -22,7 +22,11 @@ export default class BoardModel {
                         deletedAt: null,
                     },
                     include: {
-                        cards: true,
+                        cards: {
+                            where: {
+                                deletedAt: null,
+                            },
+                        },
                     },
                 },
             },
@@ -39,7 +43,11 @@ export default class BoardModel {
                         deletedAt: null,
                     },
                     include: {
-                        cards: true,
+                        cards: {
+                            where: {
+                                deletedAt: null,
+                            },
+                        },
                     },
                 },
             },
