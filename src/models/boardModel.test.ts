@@ -61,6 +61,15 @@ describe("boardModel", () => {
         await boardModel.deleteColumn(column.id);
         expect((await boardModel.getBoard(board.id))!.columns.length).toBe(0);
     });
+    it("can get all board titles", async () => {
+        const boardModel = new BoardModel();
+        await boardModel.createBoard("board 1");
+        await boardModel.createBoard("board 2");
+        const boards = await boardModel.getBoardsOnly();
+        expect(boards.length).toBe(2);
+        expect(boards[0].title).toBe("board 1");
+        expect(boards[1].title).toBe("board 2");
+    });
 });
 
 afterEach(async () => {

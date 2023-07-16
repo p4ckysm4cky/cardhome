@@ -53,6 +53,15 @@ export default class BoardModel {
             },
         });
     }
+
+    async getBoardsOnly() {
+        return await prisma.board.findMany({
+            where: {
+                deletedAt: null,
+            },
+        });
+    }
+
     async deleteBoard(id: number) {
         return await prisma.board.update({
             where: {
