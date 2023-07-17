@@ -55,6 +55,23 @@ describe("columnModel", () => {
             "do not delete me"
         );
     });
+    it("can move a card to a different column", async () => {
+        const boardModel = new BoardModel();
+        const columnModel = new ColumnModel();
+        const board = await boardModel.createBoard("board 1");
+        const column1 = await boardModel.addColumn(board.id, "column 1");
+        const column2 = await boardModel.addColumn(board.id, "column 2");
+        await columnModel.insertCard(column1.id, "card 1", "card description");
+        const card2 = await columnModel.insertCard(
+            column1.id,
+            "card 2",
+            "card description"
+        );
+        expect((await columnModel.getColumn(column1.id))!.cards.length).toBe(2);
+        await columnModel.moveCard(card2.id, column2.id);
+        expect((await columnModel.getColumn(column1.id))!.cards.length).toBe(1);
+        expect((await columnModel.getColumn(column2.id))!.cards.length).toBe(1);
+    });
     afterEach(async () => {
         await resetDatabase();
     });
