@@ -1,18 +1,21 @@
+import exp from "constants";
 import BoardRepo from "./boardRepo";
 import { resetDatabase } from "src/helpers/testHelper";
 
 describe("boardRepo", () => {
     it("can create a board", async () => {
         const boardRepo = new BoardRepo();
-        const board = await boardRepo.createBoard("a title");
+        const board = await boardRepo.createBoard("a title", "a description");
         expect(board.title).toBe("a title");
+        expect(board.description).toBe("a description");
     });
     it("can get a specific board", async () => {
         const boardRepo = new BoardRepo();
         await boardRepo.createBoard("a title1");
-        const board = await boardRepo.createBoard("a title2");
+        const board = await boardRepo.createBoard("a title2", "a description");
         const board2 = await boardRepo.getBoard(board.id);
         expect(board2!.title).toBe("a title2");
+        expect(board2!.description).toBe("a description");
         expect(board2!.id).toBe(board.id);
     });
     it("can get all boards", async () => {
@@ -42,8 +45,23 @@ describe("boardRepo", () => {
     it("can update board title", async () => {
         const boardRepo = new BoardRepo();
         const board = await boardRepo.createBoard("old title");
-        const newBoard = await boardRepo.updateBoard(board.id, "new title");
+        const newBoard = await boardRepo.updateBoardTitle(
+            board.id,
+            "new title"
+        );
         expect(newBoard.title).toBe("new title");
+    });
+    it("can update board description", async () => {
+        const boardRepo = new BoardRepo();
+        const board = await boardRepo.createBoard(
+            "old title",
+            "old description"
+        );
+        const newBoard = await boardRepo.updateBoardDescription(
+            board.id,
+            "new description"
+        );
+        expect(newBoard.description).toBe("new description");
     });
     it("can add a column", async () => {
         const boardRepo = new BoardRepo();

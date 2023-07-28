@@ -1,10 +1,11 @@
 import prisma from "src/libs/prisma";
 
 export default class BoardRepo {
-    async createBoard(title: string) {
+    async createBoard(title: string, description: string = "") {
         return await prisma.board.create({
             data: {
-                title: title,
+                title,
+                description,
             },
         });
     }
@@ -72,13 +73,23 @@ export default class BoardRepo {
             },
         });
     }
-    async updateBoard(id: number, title: string) {
+    async updateBoardTitle(id: number, title: string) {
         return await prisma.board.update({
             where: {
                 id: id,
             },
             data: {
                 title: title,
+            },
+        });
+    }
+    async updateBoardDescription(id: number, description: string) {
+        return await prisma.board.update({
+            where: {
+                id: id,
+            },
+            data: {
+                description: description,
             },
         });
     }
