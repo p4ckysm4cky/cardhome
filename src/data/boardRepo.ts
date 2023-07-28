@@ -1,6 +1,6 @@
 import prisma from "src/libs/prisma";
 
-export default class BoardModel {
+export default class BoardRepo {
     async createBoard(title: string) {
         return await prisma.board.create({
             data: {

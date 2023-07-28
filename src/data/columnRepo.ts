@@ -1,6 +1,6 @@
 import prisma from "src/libs/prisma";
 
-export default class ColumnModel {
+export default class ColumnRepo {
     async updateTitle(id: number, title: string) {
         return await prisma.column.update({
             where: {

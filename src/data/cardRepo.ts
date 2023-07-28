@@ -1,6 +1,6 @@
 import prisma from "src/libs/prisma";
 
-export default class CardModel {
+export default class CardRepo {
     async getCard(id: number) {
         return await prisma.card.findFirst({
             where: {
