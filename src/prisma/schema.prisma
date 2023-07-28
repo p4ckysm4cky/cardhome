@@ -33,10 +33,11 @@ model Column {
 }
 
 model Board {
-  id        Int       @id @default(autoincrement())
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
-  title     String
-  columns   Column[]
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+  title       String
+  description String
+  columns     Column[]
 }
